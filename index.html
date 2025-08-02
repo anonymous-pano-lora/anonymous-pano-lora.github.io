@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Panoramic Video Comparison</title>
+  <style>
+    .video-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      gap: 1px;
+    }
+    .video-container {
+      width: 50%;
+      margin: 0;
+      padding: 0;
+    }
+    .single-video {
+      margin-bottom: 20px;
+    }
+    video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    h2 {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    body {
+      margin: 20px;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+<!-- <h1>Panoramic Video Comparison</h1> -->
+
+<div style="text-align: center; margin-top: 20px; margin-bottom: 30px;">
+  <h1>Bridging Perspective and Panoramic Video Generation with LoRA Adaptation</h1>
+  <p>
+    Anonymous
+  </p>
+</div>
+
+<h2>Ours</h2>
+<script>
+for (let i = 0; i <= 26; i++) {
+  document.write(`
+    <div class="video-row">
+      <div class="video-container">
+        <h2>Ours Video ${i} (Left)</h2>
+        <video controls>
+          <source src="videos/video_citypark_${i}.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="video-container">
+        <h2>Ours Video ${i} (Right)</h2>
+        <video controls>
+          <source src="videos/video_citypark_${i}.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  `);
+}
+</script>
+
+<h2>360DVD</h2>
+<script>
+for (let i = 3; i <= 24; i++) {
+  const index = i - 3;
+  document.write(`
+    <div class="video-row">
+      <div class="video-container">
+        <h2>360DVD Video ${index} (Left)</h2>
+        <video controls>
+          <source src="videos/0%20%28${i}%29.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="video-container">
+        <h2>360DVD Video ${index} (Right)</h2>
+        <video controls>
+          <source src="videos/0%20%28${i}%29.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  `);
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const pairs = [];
+
+  const allVideos = document.querySelectorAll("video");
+
+  for (let i = 0; i < allVideos.length; i += 2) {
+    pairs.push([allVideos[i], allVideos[i + 1]]);
+  }
+
+  pairs.forEach(([v1, v2]) => {
+    v1.addEventListener("play", () => {
+      if (v2.paused) v2.play();
+    });
+    v2.addEventListener("play", () => {
+      if (v1.paused) v1.play();
+    });
+    v1.addEventListener("pause", () => {
+      if (!v2.paused) v2.pause();
+    });
+    v2.addEventListener("pause", () => {
+      if (!v1.paused) v1.pause();
+    });
+  });
+});
+</script>
+
+</body>
+</html>
